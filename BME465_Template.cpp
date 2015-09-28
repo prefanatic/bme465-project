@@ -230,30 +230,25 @@ void MyFrame::OnPaint(wxPaintEvent& event)
 }
 void MyFrame::OnFilter(wxCommandEvent& event)
 {
-
-
-	if (pImage == NULL)
-	{
-		wxMessageBox("Image is not loaded yet!", _T("Error"), wxOK | wxICON_INFORMATION, this);
+	if (pImage == NULL) {
+		wxMessageBox("Image is not loaded yet!", wxT("Error"), wxOK | wxICON_INFORMATION, this);
+		return;
 	}
-	else
-	{
-		wxImage *Filtered = NULL;
 
-		switch (event.GetId())
-		{
-		case MENU_FILTER_LP: Filtered = LowPass(pImage); break;
-		case MENU_FILTER_HP: Filtered = HighPass(pImage); break;
-		case MENU_FILTER_UNDO:
-			Filtered = copy(masterImage);
+	wxImage *Filtered = NULL;
 
-			delete pImage;
-			break;
+	switch (event.GetId()) {
+	case MENU_FILTER_LP: Filtered = LowPass(pImage); break;
+	case MENU_FILTER_HP: Filtered = HighPass(pImage); break;
+	case MENU_FILTER_UNDO:
+		Filtered = copy(masterImage);
 
-		}
-
-		pImage = Filtered;
+		delete pImage;
+		break;
 	}
+
+	pImage = Filtered;
+
 	Refresh();
 	return;
 }
