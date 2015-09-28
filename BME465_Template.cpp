@@ -7,6 +7,7 @@
 // resources
 // ----------------------------------------------------------------------------
 #include "resources/lp.xpm"
+#include "resources/hp.xpm"
 #include "resources/undo.xpm"
 
 #include "wx/image.h"
@@ -112,9 +113,9 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 #if wxUSE_TOOLBAR
 	wxToolBar *MyToolBar = new wxToolBar(this, wxID_ANY);
 
-	//MyToolBar->AddTool(MENU_FILTER_LP, lp_xpm, _T("Low Pass Filter"));
-	//MyToolBar->AddTool(MENU_FILTER_HP, lp_xpm, _T("High Pass Filter")); // TODO: Fix this icon.
-	//MyToolBar->AddTool(MENU_FILTER_UNDO, undo_xpm, _T("Undo"));
+	MyToolBar->AddTool(MENU_FILTER_LP, wxT("Low Pass Filter"), lp_xpm);
+	MyToolBar->AddTool(MENU_FILTER_HP, wxT("High Pass Filter"), hp_xpm);
+	MyToolBar->AddTool(MENU_FILTER_UNDO, wxT("Undo"), undo_xpm);
 
 	MyToolBar->Realize();
 	SetToolBar(MyToolBar);
