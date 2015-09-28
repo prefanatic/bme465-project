@@ -159,45 +159,38 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 }
 void MyFrame::OnLoad(wxCommandEvent& WXUNUSED(event))
 {
-
-	wxString fileName;
-	wxString NameofFile;
-
 	wxFileDialog fileDialog(NULL, "Choose a file to load ...", "", "", "*.bmp;*.tif;*.gif;*.jpg", wxFD_OPEN, wxDefaultPosition);
-	if (fileDialog.ShowModal() == wxID_OK)
 
-	{
-		fileName = fileDialog.GetPath();
-		NameofFile = fileDialog.GetFilename();
+	if (fileDialog.ShowModal() == wxID_OK) {
+		wxString fileName = fileDialog.GetPath();
+		wxString NameofFile = fileDialog.GetFilename();
+
 		//Update the view of main frame
 		if (pImage != NULL) delete pImage;
 		pImage = new wxImage(fileName);
 
 		if (pImage == NULL)
-			wxMessageBox("File Failed to Open!", _T("Error"), wxOK | wxICON_INFORMATION, this);
-		else
-		{
+			wxMessageBox("File Failed to Open!", wxT("Error"), wxOK | wxICON_INFORMATION, this);
+		else {
 			masterImage = pImage;
 			SetTitle(fileName);
 			Refresh();
 		}
 	}
+
 	fileDialog.Destroy();
 }
 void MyFrame::OnToGray(wxCommandEvent& event)
 {
-	if (pImage == NULL)
-	{
+	if (pImage == NULL) {
 		wxMessageBox("Image is not loaded yet!", _T("Error"), wxOK | wxICON_INFORMATION, this);
 		return;
 	}
 
-	int* buffer;
-	buffer = new int[pImage->GetWidth()*pImage->GetHeight()];
+	int* buffer = new int[pImage->GetWidth()*pImage->GetHeight()];
 	wxImage2grayBuffer(pImage, buffer);
 
-	wxImage* temp;
-	temp = grayBuffer2wxImage(buffer, pImage->GetWidth(), pImage->GetHeight());
+	wxImage* temp = grayBuffer2wxImage(buffer, pImage->GetWidth(), pImage->GetHeight());
 	delete pImage;
 	pImage = temp;
 	delete buffer;
@@ -208,35 +201,30 @@ void MyFrame::OnToGray(wxCommandEvent& event)
 
 void MyFrame::OnPaint(wxPaintEvent& event)
 {
-
 	wxPaintDC dc(this);
-	int spacingW = 0;
-	int spacingH = 0;
 
-	if (pImage == NULL)
-	{
+	if (pImage == NULL) {
 		event.Skip();
-	}
-	else
-	{
-		wxBitmap tempBitmap(*pImage);
-		SetClientSize(tempBitmap.GetWidth()*1.25, tempBitmap.GetHeight()*1.25 + 10);
-		spacingW = ceilf((tempBitmap.GetWidth()*1.25 - tempBitmap.GetWidth()) / 2);
-		spacingH = ceilf((tempBitmap.GetHeight()*1.25 - tempBitmap.GetHeight()) / 2);
-		dc.DrawBitmap(tempBitmap, (int)spacingW, (int)spacingH + 25, TRUE);
+		return;
 	}
 
-	return;
+	wxBitmap tempBitmap(*pImage);
+	SetClientSize(tempBitmap.GetWidth()*1.25, tempBitmap.GetHeight()*1.25 + 10);
+	int spacingW = ceilf((tempBitmap.GetWidth()*1.25 - tempBitmap.GetWidth()) / 2);
+	int spacingH = ceilf((tempBitmap.GetHeight()*1.25 - tempBitmap.GetHeight()) / 2);
+
+	dc.DrawBitmap(tempBitmap, spacingW, spacingH + 25, TRUE);
 }
 void MyFrame::OnFilter(wxCommandEvent& event)
 {
 	if (pImage == NULL) {
-		wxMessageBox("Image is not loaded yet!", wxT("Error"), wxOK | wxICON_INFORMATION, this);
+		wxMessageBox("Image is not loaded yet!", "Error", wxOK | wxICON_INFORMATION, this);
 		return;
 	}
 
 	wxImage *Filtered = NULL;
 
+	// Switch our toolbar request to do what we really want.
 	switch (event.GetId()) {
 	case MENU_FILTER_LP: Filtered = LowPass(pImage); break;
 	case MENU_FILTER_HP: Filtered = HighPass(pImage); break;
@@ -250,5 +238,4 @@ void MyFrame::OnFilter(wxCommandEvent& event)
 	pImage = Filtered;
 
 	Refresh();
-	return;
 }
