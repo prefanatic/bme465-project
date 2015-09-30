@@ -38,12 +38,10 @@
     <ClCompile Include="BME465_Template.cpp" />
     <ClCompile Include="image_processor.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BME465_Template.hpp" />
     <ClInclude Include="image_processor.hpp" />
-    <ClInclude Include="util.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>app</ProjectName>

@@ -30,9 +30,6 @@ EVT_MENU(ID_ToGray, MyFrame::OnToGray)
 EVT_PAINT(MyFrame::OnPaint)
 EVT_MENU(MENU_FILTER_LP, MyFrame::OnFilter)
 EVT_MENU(MENU_FILTER_HP, MyFrame::OnFilter)
-EVT_MENU(MENU_FILTER_MIN, MyFrame::OnFilter)
-EVT_MENU(MENU_FILTER_MED, MyFrame::OnFilter)
-EVT_MENU(MENU_FILTER_MAX, MyFrame::OnFilter)
 
 
 EVT_MENU(MENU_FILTER_UNDO, MyFrame::OnFilter)
@@ -94,9 +91,9 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 	//build filterMenu
 	filterMenu->Append(MENU_FILTER_LP, _T("&Lowpass Filter\tAlt-L"), _T("Lowpass Filter"));
 	filterMenu->Append(MENU_FILTER_HP, _T("&Highpass Filter\tAlt-H"), _T("Highpass Filter"));
-	filterMenu->Append(MENU_FILTER_MIN, wxT("&Minimum Filter"), wxT("Minimum Filter")); // TODO: Add hotkeys!
-	filterMenu->Append(MENU_FILTER_MED, wxT("&Median Filter"), wxT("Median Filter"));
-	filterMenu->Append(MENU_FILTER_MAX, wxT("&Maximum Filter"), wxT("Maximum Filter"));
+
+
+
 
 	image_processMenu->Append(MENU_FILTER, _T("Fil&ters\tAlt-T"), filterMenu, _T("Filter Menu"));
 
@@ -118,10 +115,6 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 
 	MyToolBar->AddTool(MENU_FILTER_LP, wxT("Low Pass Filter"), lp_xpm);
 	MyToolBar->AddTool(MENU_FILTER_HP, wxT("High Pass Filter"), hp_xpm);
-	MyToolBar->AddTool(MENU_FILTER_MIN, wxT("Minimum Filter"), lp_xpm);
-	MyToolBar->AddTool(MENU_FILTER_MED, wxT("Median Filter"), lp_xpm);
-	MyToolBar->AddTool(MENU_FILTER_MAX, wxT("Maximum Filter"), lp_xpm);
-
 	MyToolBar->AddTool(MENU_FILTER_UNDO, wxT("Undo"), undo_xpm);
 
 	MyToolBar->Realize();
@@ -235,9 +228,6 @@ void MyFrame::OnFilter(wxCommandEvent& event)
 	switch (event.GetId()) {
 	case MENU_FILTER_LP: Filtered = LowPass(pImage); break;
 	case MENU_FILTER_HP: Filtered = HighPass(pImage); break;
-	case MENU_FILTER_MIN: Filtered = nonLinFilter(pImage, NONLIN_MIN); break;
-	case MENU_FILTER_MED: Filtered = nonLinFilter(pImage, NONLIN_MEDIAN); break;
-	case MENU_FILTER_MAX: Filtered = nonLinFilter(pImage, NONLIN_MAX); break;
 	case MENU_FILTER_UNDO:
 		Filtered = copy(masterImage);
 

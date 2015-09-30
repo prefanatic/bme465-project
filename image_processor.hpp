@@ -20,7 +20,6 @@ void wxImage2colorBuffer(const wxImage* img, int* buffer);
 wxImage* colorBuffer2wxImage(const int* buffer, int width, int height);
 wxImage* LowPass(wxImage *pImage);
 wxImage* HighPass(wxImage *pImage);
-wxImage* nonLinFilter(wxImage* pImage, int FILTER_TYPE);
 wxImage* copy(wxImage *masterImage);
 
 #endif
