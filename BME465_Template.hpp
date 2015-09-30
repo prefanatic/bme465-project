@@ -90,17 +90,23 @@ public:
 
 enum
 {
-    // menu items
-    MENU_FILE_OPEN = wxID_OPEN,
-    MENU_FILE_QUIT = wxID_EXIT,
-    MENU_FILTER    = 100,
-    MENU_FILTER_LP = 101,
+	// menu items
+	MENU_FILE_OPEN = wxID_OPEN,
+	MENU_FILE_QUIT = wxID_EXIT,
+	MENU_FILTER = 100,
+	MENU_FILTER_LP = 101,
 	MENU_FILTER_HP = 102,
+	MENU_FILTER_MIN = 103,
+	MENU_FILTER_MED = 104,
+	MENU_FILTER_MAX = 105,
 
+	MENU_FILTER_UNDO = 108,
 
-	MENU_FILTER_UNDO	= 108,
+	ID_ToGray = 200,
 
-    ID_ToGray = 200,
+	NONLIN_MEDIAN = 1,
+	NONLIN_MIN = 2,
+	NONLIN_MAX = 3,
 
 
 

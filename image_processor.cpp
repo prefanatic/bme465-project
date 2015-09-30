@@ -2,6 +2,7 @@
 
 #include "image_processor.hpp"
 #include "BME465_Template.hpp"
+#include "util.h"
 #include <vector> //FOR MEDIAN FILTER
 #include <algorithm> //FOR SORT()
 #include <cmath>
@@ -114,6 +115,77 @@ void wxImage2colorBuffer(const wxImage* img, int* buffer)
 	return;
 }
 
+// Process a wxImage and generate an int array of its values, to be passed into a filter.
+// UNUSED
+int* createFilterTemp(wxImage *pImage) {
+	int h = pImage->GetHeight();
+	int w = pImage->GetWidth();
+
+	int* pTemp = new int[w * h];
+
+	wxImage2grayBuffer(pImage, pTemp);
+
+	return pTemp;
+}
+
+// Median filter
+wxImage* nonLinFilter(wxImage* pImage, int FILTER_TYPE) {
+	int h = pImage->GetHeight();
+	int w = pImage->GetWidth();
+
+	int* pTemp = new int[w * h];
+	int* pRes = new int[w * h];
+
+	wxImage2grayBuffer(pImage, pTemp);
+
+	// Create the vector of ints.
+	std::vector<int> valArr(9);
+	double val;
+	int x, y;
+	unsigned long i;
+
+	for (x = 0; x < w; x++) {
+		for (y = 0; y < h; y++) {
+
+			i = (y * w) + x;
+			if (x != 0 && y != 0 && x != (w - 1) && y != (h - 1)) {
+				valArr[0] = pTemp[i - w - 1];
+				valArr[1] = pTemp[i - w];
+				valArr[2] = pTemp[i - w + 1];
+
+				valArr[3] = pTemp[i - 1];
+				valArr[4] = pTemp[i];
+				valArr[5] = pTemp[i + 1];
+
+				valArr[6] = pTemp[i + w - 1];
+				valArr[7] = pTemp[i + w];
+				valArr[8] = pTemp[i + w + 1];
+
+				sort(valArr.begin(), valArr.end());
+
+				switch (FILTER_TYPE) {
+				case NONLIN_MIN: val = valArr[0]; break;
+				case NONLIN_MEDIAN: val = valArr[4]; break;
+				case NONLIN_MAX: val = valArr[8]; break;
+				}
+
+				pRes[i] = clamp(val, 0, 255);
+
+			}
+			else {
+				pRes[i] = pTemp[i];
+			}
+		}
+	}
+
+	wxImage* temp = grayBuffer2wxImage(pRes, w, h);
+
+	delete pTemp;
+	delete pRes;
+	return temp;
+}
+
+
 wxImage * HighPass(wxImage *pImage) {
 	int height = pImage->GetHeight();
 	int width = pImage->GetWidth();
@@ -139,10 +211,10 @@ wxImage * HighPass(wxImage *pImage) {
 					+ pTemp[i - 1] + pTemp[i] + pTemp[i + 1]
 					+ pTemp[i + width - 1] + pTemp[i + width] + pTemp[i + width + 1]
 					) / 9.0;
-					
 
-				pResult[i] = 2 * pTemp[i] - (int) val;
-				pResult[i] = std::max(0, std::min(pResult[i], 255));
+
+				pResult[i] = 2 * pTemp[i] - (int)val;
+				pResult[i] = clamp(pResult[i], 0, 255);
 			}
 			else {
 				pResult[i] = pTemp[i];
