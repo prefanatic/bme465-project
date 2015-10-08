@@ -128,6 +128,46 @@ int* createFilterTemp(wxImage *pImage) {
 	return pTemp;
 }
 
+// Edge detection.
+wxImage* sobelFilter(wxImage* pImage) {
+	int h = pImage->GetHeight();
+	int w = pImage->GetWidth();
+
+	int* pTemp = new int[w * h];
+	int* pRes = new int[w * h];
+
+	wxImage2grayBuffer(pImage, pTemp);
+
+	int x, y;
+	unsigned long i;
+	double val;
+
+	for (x = 0; x < w; x++) {
+		for (y = 0; y < h; y++) {
+
+			i = (y * w) + x;
+			if (x != 0 && y != 0 && x != (w - 1) && y != (h - 1)) {
+				val =
+					abs(pTemp[i - w - 1] * (-1) + pTemp[i - w + 1] + pTemp[i - 1] * (-2) + pTemp[i + 1] * 2 + pTemp[i + w - 1] * (-1) + pTemp[i + w + 1])
+					+ abs(pTemp[i - w - 1] * (-1) + pTemp[i - w] * (-2) + pTemp[i - w + 1] * (-1) + pTemp[i + w - 1] + pTemp[i + w] * 2 + pTemp[i + w + 1]);
+				
+				if (val < 0) val = 0;
+				if (val > 255) val = 255;
+
+				pRes[i] = (int) val;
+			}
+			else {
+				pRes[i] = pTemp[i];
+			}
+		}
+	}
+
+	wxImage* temp = grayBuffer2wxImage(pRes, w, h);
+
+	delete pTemp;
+	delete pRes;
+	return temp;
+}
 // Median filter
 wxImage* nonLinFilter(wxImage* pImage, int FILTER_TYPE) {
 	int h = pImage->GetHeight();

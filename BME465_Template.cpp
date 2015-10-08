@@ -30,6 +30,7 @@ EVT_MENU(ID_ToGray, MyFrame::OnToGray)
 EVT_PAINT(MyFrame::OnPaint)
 EVT_MENU(MENU_FILTER_LP, MyFrame::OnFilter)
 EVT_MENU(MENU_FILTER_HP, MyFrame::OnFilter)
+EVT_MENU(MENU_FILTER_SORBEL, MyFrame::OnFilter)
 EVT_MENU(MENU_FILTER_MIN, MyFrame::OnFilter)
 EVT_MENU(MENU_FILTER_MED, MyFrame::OnFilter)
 EVT_MENU(MENU_FILTER_MAX, MyFrame::OnFilter)
@@ -95,6 +96,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 	//build filterMenu
 	filterMenu->Append(MENU_FILTER_LP, _T("&Lowpass Filter\tAlt-L"), _T("Lowpass Filter"));
 	filterMenu->Append(MENU_FILTER_HP, _T("&Highpass Filter\tAlt-H"), _T("Highpass Filter"));
+	filterMenu->Append(MENU_FILTER_SORBEL, wxT("Edge Detection (Sorbel)"), wxT("Edge Detection (Sorbel)"));
 
 	nonlinearMenu->Append(MENU_FILTER_MIN, wxT("M&inimum Filter\tAlt-I"), wxT("Minimum Filter")); // TODO: Add hotkeys!
 	nonlinearMenu->Append(MENU_FILTER_MED, wxT("M&edian Filter\tAlt-E"), wxT("Median Filter"));
@@ -227,6 +229,7 @@ void MyFrame::OnPaint(wxPaintEvent& event)
 
 	dc.DrawBitmap(tempBitmap, spacingW, spacingH + 25, TRUE);
 }
+
 void MyFrame::OnFilter(wxCommandEvent& event)
 {
 	if (pImage == NULL) {
@@ -240,6 +243,7 @@ void MyFrame::OnFilter(wxCommandEvent& event)
 	switch (event.GetId()) {
 	case MENU_FILTER_LP: Filtered = LowPass(pImage); break;
 	case MENU_FILTER_HP: Filtered = HighPass(pImage); break;
+	case MENU_FILTER_SORBEL: Filtered = sobelFilter(pImage); break;
 	case MENU_FILTER_MIN: Filtered = nonLinFilter(pImage, NONLIN_MIN); break;
 	case MENU_FILTER_MED: Filtered = nonLinFilter(pImage, NONLIN_MEDIAN); break;
 	case MENU_FILTER_MAX: Filtered = nonLinFilter(pImage, NONLIN_MAX); break;
