@@ -84,6 +84,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 	wxMenu *fileMenu = new wxMenu;
 	wxMenu *image_processMenu = new wxMenu;
 	wxMenu *filterMenu = new wxMenu;
+	wxMenu *nonlinearMenu = new wxMenu;
 
 
 	// the "About" item should be in the help menu
@@ -94,10 +95,12 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 	//build filterMenu
 	filterMenu->Append(MENU_FILTER_LP, _T("&Lowpass Filter\tAlt-L"), _T("Lowpass Filter"));
 	filterMenu->Append(MENU_FILTER_HP, _T("&Highpass Filter\tAlt-H"), _T("Highpass Filter"));
-	filterMenu->Append(MENU_FILTER_MIN, wxT("&Minimum Filter"), wxT("Minimum Filter")); // TODO: Add hotkeys!
-	filterMenu->Append(MENU_FILTER_MED, wxT("&Median Filter"), wxT("Median Filter"));
-	filterMenu->Append(MENU_FILTER_MAX, wxT("&Maximum Filter"), wxT("Maximum Filter"));
 
+	nonlinearMenu->Append(MENU_FILTER_MIN, wxT("M&inimum Filter\tAlt-I"), wxT("Minimum Filter")); // TODO: Add hotkeys!
+	nonlinearMenu->Append(MENU_FILTER_MED, wxT("M&edian Filter\tAlt-E"), wxT("Median Filter"));
+	nonlinearMenu->Append(MENU_FILTER_MAX, wxT("M&aximum Filter\tAlt-A"), wxT("Maximum Filter"));
+
+	filterMenu->Append(MENU_FILTER_NONLINEAR, wxT("Nonlinear"), nonlinearMenu, wxT("Nonlinear Filters"));
 	image_processMenu->Append(MENU_FILTER, _T("Fil&ters\tAlt-T"), filterMenu, _T("Filter Menu"));
 
 	helpMenu->Append(MENU_HELP_ABOUT, _T("&About...\tF1"), _T("Show about dialog"));
@@ -118,9 +121,11 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 
 	MyToolBar->AddTool(MENU_FILTER_LP, wxT("Low Pass Filter"), lp_xpm);
 	MyToolBar->AddTool(MENU_FILTER_HP, wxT("High Pass Filter"), hp_xpm);
-	MyToolBar->AddTool(MENU_FILTER_MIN, wxT("Minimum Filter"), lp_xpm);
+
+
+	/*MyToolBar->AddTool(MENU_FILTER_MIN, wxT("Minimum Filter"), lp_xpm);
 	MyToolBar->AddTool(MENU_FILTER_MED, wxT("Median Filter"), lp_xpm);
-	MyToolBar->AddTool(MENU_FILTER_MAX, wxT("Maximum Filter"), lp_xpm);
+	MyToolBar->AddTool(MENU_FILTER_MAX, wxT("Maximum Filter"), lp_xpm);*/
 
 	MyToolBar->AddTool(MENU_FILTER_UNDO, wxT("Undo"), undo_xpm);
 
