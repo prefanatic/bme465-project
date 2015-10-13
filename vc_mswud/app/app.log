@@ -1,0 +1,17 @@
+﻿Build started 10/8/2015 2:37:43 PM.
+     1>Project "C:\Users\prefa\Documents\bme465-project\app.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\prefa\Documents\wxwidgets-git\wxWidgets\lib\vc_lib\mswud" /I"C:\Users\prefa\Documents\wxwidgets-git\wxWidgets\include" /I. /I"C:\Users\prefa\Documents\wxwidgets-git\wxWidgets\samples" /Zi /nologo /W4 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CRT_SECURE_NO_DEPRECATE=1 /D _CRT_NON_CONFORMING_SWPRINTFS=1 /D _SCL_SECURE_NO_WARNINGS=1 /D __WXMSW__ /D _UNICODE /D _WINDOWS /D NOPCH /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"vc_mswud\app\\" /Fd"vc_mswud\app.pdb" /Gd /TP /analyze- /errorReport:prompt /MP image_processor.cpp
+         image_processor.cpp
+     1>c:\users\prefa\documents\bme465-project\image_processor.cpp(212): warning C4701: potentially uninitialized local variable 'val' used
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"vc_mswud\app.exe" /INCREMENTAL /NOLOGO /LIBPATH:wx wxmsw31ud_core.lib wxbase31ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib wininet.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"vc_mswud\app.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"vc_mswud\app.lib" /MACHINE:X86 /SAFESEH vc_mswud\app\BME465_Template.obj
+         vc_mswud\app\image_processor.obj
+         vc_mswud\app\main.obj
+         vc_mswud\app\util.obj
+         app.vcxproj -> C:\Users\prefa\Documents\bme465-project\vc_mswud\app.exe
+     1>Done Building Project "C:\Users\prefa\Documents\bme465-project\app.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.43
